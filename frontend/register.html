@@ -1,0 +1,260 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PL Softtech-Aptitude</title>
+    <style>
+        body{
+            background: linear-gradient(135deg,goldenrod,white);
+        }
+        .logo1 img{
+            margin-right: 10px;
+        }
+        .logo1 h1{
+            font-size: 3.2rem;
+        }
+        .logo1{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .box1{
+            background-color: white;
+            width: 600px;
+            gap: 30px;
+            height: 100%;
+            margin-left: 0;
+            border-radius: 20px;
+        }
+        .register{
+           gap: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .box{
+            margin: 40px 50px;
+            padding: 30px;
+            width: 300px;
+            height: 460px;
+            border-radius: 20px;
+            /* text-align: center; */
+            background-color: goldenrod;
+            color: rgb(70, 70, 104);
+        }
+        .box1 img{
+            object-fit: contain;
+            width: 600px;
+            height: 500px;
+            opacity: 0.7;
+        }
+        input{
+            width: 300px;
+            height: 40px;
+            border-radius: 10px;
+            font-size: 16px;
+            border: none;
+            background-color: rgb(220, 239, 247);
+            /* background-color: blue; */
+        }
+        label{
+            font-size: 20px;
+        }
+        strong{
+            font-size: 20px;
+        }
+        option,select{
+            font-size: 16px;
+        }
+        h4,a{
+            font-size: 20px;
+        }
+        a{
+            text-decoration: none;
+        }
+        h4,h2{
+            text-align: center;
+        }
+        .btn{
+            text-align: center;
+        }
+        button{
+            height: 40px;
+            width: 100px;
+            font-size: 20px;
+            background-color: goldenrod;
+            border-radius: 10px;
+            color: white;
+        }
+        .col{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .eye{
+            position:absolute; 
+            right:10px; 
+            top:10px; 
+            cursor:pointer;
+        }
+        @media (min-width: 768px) and (max-width: 1024px){
+            body{
+                background: none;
+                background-color: goldenrod;
+            }
+            .box{
+                width: 40%;
+                height: 100%;
+                background-color: white;
+            }
+            input{
+                width: 100%;
+            }
+            .box1{
+                display: none;
+            }
+            .logo1 img{
+            margin-right: 0px;
+            width: 30px;
+            height: 20px;
+        }
+        .logo1 img{
+            width: 60px;
+            height: 50px;
+        }
+        .logo1 h1{
+            font-size: 3.2rem;
+        }
+        .logo1{
+            display: flex;
+            /* align-items: center; */
+            justify-content: center;
+        }
+        }
+        @media (max-width: 756px){
+            body{
+                background: none;
+                background-color: goldenrod;
+            }
+            .box{
+                width: 85%;
+            height: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            background-color: white;
+            /* margin: 40px 20px; */
+
+            
+            }
+            input{
+                width: 100%;
+            }
+            .box1{
+                display: none;
+            }
+            .logo1 img{
+            margin-right: 0px;
+            width: 20px;
+            height: 20px;
+        }
+        .logo1 img{
+            width: 70px;
+            height: 30px;
+        }
+        .logo1 h1{
+            font-size: 1.7rem;
+        }
+        .logo1{
+            display: flex;
+            /* align-items: center; */
+            justify-content: center;
+        }
+        }
+       
+      
+    </style>
+    <link rel="stylesheet" href="{% static 'quiz.css' %}">
+</head>
+<body>
+    <div class="logo1">
+        <img src="{% static 'images/logo.png' %}" style="height: 60px;" alt="">
+        <h1>PL Soft tech</h1>
+    </div>
+    <div class="register">
+        <div class="box1">
+            <img src="{% static 'images/img1.jpg' %}" alt="">
+        </div>
+        <div class="box">
+        <form action="" id="register">
+            <h2>Register</h2>
+            {% csrf_token %}
+        <label for="">Name:</label><br><input type="text" name="" id="name" required><br><br>
+    <label for="">Email:</label><br><input type="email" name="" id="email" required><br><br>
+    <label for="">Password:</label><br>
+    <div class="col" style="position: relative;"><input type="password" name="" id="password" required >
+        <span class="eye" onclick="toggle()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+</svg></span></div><br><br><br>
+    <div class="btn">
+            <button type="submit" id="register">Register</button>
+    </div><br>
+    <h4>Already Registered?<a href="{% url 'login_page' %}">Login</a></h4>
+        </form>
+    </div>
+    </div>
+    <script>
+        function toggle(){
+        const pass=document.getElementById('password')
+            if(pass.type==="text"){ 
+                pass.type="password"
+            }
+            else if(pass.type==="password"){
+                pass.type="text"
+            }
+        }
+    const form=document.getElementById('register')
+    form.addEventListener('submit',async function(event){
+        let csrftoken=document.querySelector('[name=csrfmiddlewaretoken]').value
+        event.preventDefault()
+        const name=document.getElementById('name').value
+        const email=document.getElementById('email').value
+        const password=document.getElementById('password').value
+    try {
+        const response = await fetch(
+            "/register/",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrftoken
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password,
+                    role: "Student"
+                })
+            }
+        )
+        const data = await response.json()
+        console.log("STATUS:", response.status)
+        console.log("RESPONSE:", data)
+        if(response.ok){
+            alert("Registration successful!")
+            window.location.href = "/login_page/"
+        }
+        else{
+            alert(data.error || "Registration failed")
+        }
+    }
+    catch (error){
+        console.log(error)
+        alert( "Unable to connect to server" )
+    }
+})
+</script>
+</body>
+</html>

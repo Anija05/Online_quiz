@@ -1,0 +1,1101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin- PL Softtech</title>
+     <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: goldenrod;
+        color: #28352d;
+    }
+    .navbar {
+        width: 100%;
+        height: 72px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 7%;
+        background: #ffffff;
+        border-bottom: 1px solid #e5e8e4;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    .logo {
+        font-size: 25px;
+        font-weight: bold;
+        color: #161e19;
+    }
+    .logo span {
+        color: goldenrod;
+    }
+    .logo img{
+        padding-right: 12px;
+        width: 60px;
+        height: 50px;
+        object-fit: cover;
+    }
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+    .nav-links a {
+        text-decoration: none;
+        color: #4d5c52;
+        font-size: 15px;
+        transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #78926d;
+    }
+
+
+    .menu-btn {
+        display: none;
+
+        border: none;
+        background: none;
+
+        font-size: 25px;
+        cursor: pointer;
+
+        color: #28352d;
+    }
+    main {
+        width: 86%;
+        max-width: 1200px;
+        margin: auto;
+    }
+    .welcome {
+    margin-top: 55px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .small-title {
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        color: #78926d;
+        margin-bottom: 8px;
+    }
+
+    .welcome h1 {
+        font-size: 38px;
+        color: white;
+        margin-bottom: 12px;
+    }
+
+    .welcome h1 span {
+        color:black;
+    }
+
+    .welcome p {
+        color: #000000;
+        line-height: 1.6;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        border: none;
+        cursor: pointer;
+        padding: 13px 22px;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+    .primary-btn {
+        background: #b7bbb6;
+        color: rgb(9, 8, 8);
+    }
+    .primary-btn:hover {
+        background: #526a4a;
+        color: white;
+    }
+    .secondary-btn {
+        background: #e7eee3;
+        color: #4f6848;
+    }
+    .secondary-btn:hover {
+        background: #dbe6d6;
+    }
+
+    .stats {
+        margin-top: 45px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .stat-card {
+        background: white;
+        border: 1px solid #e5e8e4;
+        border-radius: 12px;
+        padding: 25px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #edf3e9;
+        font-size: 22px;
+    }
+
+    .stat-card p {
+        color: #7a847d;
+        font-size: 14px;
+
+        margin-bottom: 5px;
+    }
+
+    .stat-card h2 {
+        font-size: 25px;
+    }
+    .form-section,
+    .quiz-section,
+    .questions-section,
+    .selected-quiz {
+        margin-top: 45px;
+        background: white;
+        border: 1px solid #e5e8e4;
+        border-radius: 14px;
+        padding: 30px;
+    }
+
+
+    .section-heading,
+    .section-title,
+    .selected-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+    .section-heading h2,
+    .section-title h2 {    
+        font-size: 25px;
+    }
+    .close-btn {    
+        border: none;
+        background: #edf0ec;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        font-size: 22px;
+        cursor: pointer;
+        color: #58645b;
+    }
+    .form-group {    
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #465249;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 13px 14px;
+        border: 1px solid #dce1dc;
+        border-radius: 8px;
+        outline: none;
+        font-size: 14px;
+        font-family: inherit;
+        background: #fafbf9;
+    }
+    .form-group textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        border-color: #78926d;
+        background: white;
+    }
+
+    .form-group small {
+        display: block;
+        margin-top: 6px;
+        color: #89928c;
+        font-size: 12px;
+    }
+
+    .options-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 20px;
+    }
+
+.quiz-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.quiz-card {
+    border: 1px solid #e3e7e2;
+    border-radius: 12px;
+    padding: 23px;
+    transition: 0.3s;
+    background: #fcfdfb;
+}
+
+.quiz-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(40, 53, 45, 0.08);
+}
+
+.quiz-card-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.category {
+    background: #e8f0e5;
+    color: #5e7557;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+}
+
+
+.quiz-card h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.quiz-card p {
+    color: #747d76;
+    line-height: 1.5;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.quiz-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.quiz-actions button {
+    border: none;
+    cursor: pointer;
+    padding: 9px 13px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.add-question-btn {
+    background: #657d5c;
+    color: white;
+}
+
+.edit-btn {
+    background: #edf1eb;
+    color: #52664e;
+}
+
+.delete-btn {
+    background: #f8eaea;
+    color: #a05252;
+}
+
+.selected-quiz {
+    background: #edf3e9;
+    border-color: #dce7d8;
+}
+
+.selected-header {
+    margin-bottom: 0;
+}
+
+.selected-header h2 {
+    margin-bottom: 8px;
+}
+
+.selected-header p:not(.small-title) {
+    color: #68746b;
+}
+
+.question-card {
+    border: 1px solid #e1e6e0;
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 15px;
+    background: #fcfdfb;
+}
+
+.question-number {
+    font-size: 12px;
+    font-weight: bold;
+    color: #78926d;
+    margin-bottom: 8px;
+}
+
+.question-text {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.option-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.option {
+    padding: 10px;
+    background: #f2f5f1;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.correct {
+    border: 1px solid #9ab38f;
+    background: #e8f1e5;
+}
+
+.question-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.question-actions button {
+    border: none;
+    cursor: pointer;
+    padding: 8px 13px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.loading {
+    text-align: center;
+    padding: 30px;
+    color: #858e87;
+}
+.resultcard{
+    width: 50%;
+    height: auto;
+    color:#000000;
+    background-color: rgb(236, 234, 234);
+    margin-top: 10px;
+    padding: 20px;
+    border-radius: 10px;
+}
+.resultcard p{
+    padding-top: 5px;
+    color: #465249;
+}
+.resultcard h3{
+    padding-top: 5px;
+}
+
+footer {
+    margin-top: 70px;
+    padding: 30px;
+    text-align: center;
+    background: #e8ede5;
+    color: #657066;
+    font-size: 13px;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 5%;
+    }
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        right: 5%;
+        width: 220px;
+        padding: 20px;
+        background: rgb(255, 255, 255);
+        border: 1px solid #e5e8e4;
+        border-radius: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    .nav-links.active {
+        display: flex;
+    }
+    .menu-btn {
+        display: block;
+    }
+    main {
+        width: 90%;
+    }
+    .welcome {
+        margin-top: 35px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .welcome h1 {
+        font-size: 30px;
+    }
+    .stats {
+        grid-template-columns: 1fr;
+    }
+    .quiz-container {
+        grid-template-columns: 1fr;
+    }
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+    .option-list {
+        grid-template-columns: 1fr;
+    }
+    .section-heading,
+    .section-title,
+    .selected-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .form-section,
+    .quiz-section,
+    .questions-section,
+    .selected-quiz {
+        padding: 20px;
+    }
+    .selected-header .primary-btn,
+    .section-title .secondary-btn {
+        width: 100%;
+    }
+}
+     </style>
+     <link rel="stylesheet" href="{% static 'quiz.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="">PL<span>Softtech</span>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#myQuizzes">My Quizzes</a>
+            <a href="/login_page/" onclick="logout()">Logout</a>
+        </div>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    </nav>
+    <main>
+        <section class="welcome" id="dashboard">
+            <div>
+                <p class="small-title">ADMIN DASHBOARD</p>
+                <h1>Welcome back,<span id="teacherName">Teacher</span>
+                </h1>
+                <p>
+                    Create quizzes, add questions and manage your quizzes
+                    from one place.
+                </p>
+            </div>
+            <button class="primary-btn" onclick="showCreateQuiz()">+ Create New Quiz</button>
+        </section>
+        <section class="stats">
+            <div class="stat-card">
+                <div>
+                    <p>My Quizzes</p>
+                    <h2 id="quizCount">0</h2>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div>
+                    <p>Total Questions</p>
+                    <h2 id="questionCount">0</h2>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div>
+                    <p>Created By You</p>
+                    <h2 id="createdCount">0</h2>
+                </div>
+            </div>
+        </section>
+        <section class="form-section hidden" id="createQuiz">
+            <div class="section-heading">
+                <div>
+                    <p class="small-title">NEW QUIZ</p>
+                    <h2>Create a Quiz</h2>
+                </div>
+                <button class="close-btn" onclick="hideCreateQuiz()">
+                    ×
+                </button>
+            </div>
+            <form id="quizForm">
+            {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="quizTitle">Quiz Title</label>
+                    <input type="text" id="quizTitle" placeholder="Enter quiz title" require >
+                </div>
+                <div class="form-group">
+                    <label for="quizDescription">Description</label>
+                    <textarea id="quizDescription" placeholder="Enter quiz description" require ></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="quizDuration">Duration(minutes)</label>
+                    <input type="number" name="" id="duration" min="1" required>
+                </div>
+                <button type="submit" class="primary-btn">Create Quiz</button>
+            </form>
+        </section>
+        <section class="selected-quiz hidden" id="selectedQuizSection">
+            <div class="selected-header">
+                <div>
+                    <p class="small-title">SELECTED QUIZ</p>
+                    <h2 id="selectedQuizTitle">Quiz</h2>
+                    <p id="selectedQuizDescription">Description</p>
+                    <p id="selectedDuration">Duration</p>
+                </div>
+                <button class="primary-btn" onclick="showQuestionForm()"> + Add Question</button>
+            </div>
+        </section>
+        
+        <section class="quiz-section" id="myQuizzes">
+            <div class="section-title">
+                <div>
+                    <p class="small-title">MANAGEMENT</p>
+                    <h2>My Quizzes</h2>
+                </div>
+                <button class="secondary-btn" onclick="showCreateQuiz()">+ Create Quiz</button>
+                
+            </div>
+            <div class="quiz-container" id="quizContainer" >
+                <p class="loading"> Loading quizzes... </p>
+            </div>
+        </section>
+        <section class="questions-section hidden" id="questionsSection">
+            <div class="section-title">
+                <div>
+                    <p class="small-title">QUIZ QUESTIONS</p>
+                    <h2>Questions</h2>
+                </div>
+                <button class="secondary-btn" onclick="showQuestionForm()"> + Add Question </button>
+            </div>
+            <section class="form-section hidden" id="questionFormSection" >
+            <div class="section-heading">
+                <div>
+                    <p class="small-title">ADD QUESTION</p>
+                    <h2>Add a Question</h2>
+                </div>
+                <button class="close-btn" onclick="hideQuestionForm()"> ×</button>
+            </div>
+            <form id="questionForm">
+                <div class="form-group">
+                    <label for="questionText">Question</label>
+                    <textarea id="questionText" placeholder="Enter your question" required></textarea>
+                </div>
+                <div class="options-grid">
+                    <div class="form-group">
+                        <label for="optionA">Option A</label>
+                        <input type="text" id="optionA" placeholder="Enter option A" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="optionB"> Option B</label>
+                        <input type="text" id="optionB" placeholder="Enter option B" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="optionC">Option C</label>
+                        <input type="text" id="optionC"placeholder="Enter option C" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="optionD">Option D</label>
+                        <input type="text" id="optionD" placeholder="Enter option D" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="correctAnswer">Correct Answer</label>
+                    <select id="correctAnswer" required>
+                        <option value="" hidden>Select correct answer</option>
+                        <option value="A">Option A</option>
+                        <option value="B">Option B</option>
+                        <option value="C">Option C</option>
+                        <option value="D">Option D</option>
+                    </select>
+                </div>
+                <button type="submit" class="primary-btn">Add Question</button>
+            </form>
+        </section>
+            <div class="questions-container" id="questionsContainer">
+            </div>
+        </section>
+        <section>
+            <div class="resultcontainer" id="resultcontainer" ></div>
+        </section>
+    </main>
+    <footer>
+        <p> 2026 PL Softtech. Admin Dashboard</p>
+    </footer>
+    <script>
+    const userid = localStorage.getItem("userid");
+    const role = localStorage.getItem("role");
+    const name = localStorage.getItem("name");
+    if (!userid || role !== "Teacher") {
+        window.location.href = "/login_page/";
+    }
+    document.getElementById("teacherName").textContent = name;
+    let selectedQuizId = null;
+    loadQuizzes();
+    async function loadQuizzes() {
+        try {
+            const response = await fetch(
+                `/teacher/${userid}/`
+            );
+            if (!response.ok) {
+                throw new Error("Failed to load quizzes");
+            }
+            const quizzes = await response.json();
+            displayQuizzes(quizzes);
+        }
+        catch (error) {
+            console.log(error);
+            document.getElementById("quizContainer").innerHTML =
+                "<p class='loading'>Unable to load quizzes.</p>";
+            }
+        }
+async function viewResults(quizId) {
+
+    try {
+
+        const response = await fetch(
+            `/teacher/${userid}/quiz/${quizId}/results/`
+        );
+
+        const results = await response.json();
+
+        if (!response.ok) {
+            alert(results.error || "Unable to load results");
+            return;
+        }
+
+        const container1 = document.getElementById("resultcontainer");
+
+        container1.innerHTML = "";
+
+        if (results.length === 0) {
+            alert("No Candidates attended")
+            return;
+        }
+
+        results.forEach(function(result, index) {
+
+            const card1 = document.createElement("div");
+            card1.className = "resultcard";
+            card1.innerHTML = `
+                <h3>Results</h3>
+                <h3>Email: ${result.email}</h3>
+                <h3>Name: ${result.student_name}</h3>
+                <p>Total questions: ${result.total_questions}</p>
+                <p>Score: ${result.score}/${result.total_questions}</p>
+            `;
+            container1.appendChild(card1);
+        });
+
+    } catch (error) {
+
+        console.log(error);
+        alert("Unable to load results");
+
+    }
+}
+function displayQuizzes(quizzes) {
+    const container =document.getElementById("quizContainer");
+    container.innerHTML = "";
+    document.getElementById("quizCount").textContent =quizzes.length;
+    document.getElementById("createdCount").textContent =quizzes.length;
+    if (quizzes.length === 0) {
+        container.innerHTML ="<p class='loading'>No quizzes created yet.</p>";
+        return;
+    }
+    quizzes.forEach(function(quiz) {
+        const card =document.createElement("div");
+        card.className = "quiz-card";
+        card.innerHTML = `
+        <div class="quiz-card-top">
+            <span class="category">
+                    Quiz
+                </span>
+            </div>
+            <h3>${quiz.title} </h3>
+            <p>${quiz.description}</p>
+            <p>Duration:${quiz.duration}minutes</p>
+            
+            <div class="quiz-actions">
+                <button class="add-question-btn"
+                    onclick="selectQuiz(
+                        ${quiz.id},
+                        '${escapeText(quiz.title)}',
+                        '${escapeText(quiz.description)}',
+                        '${(quiz.duration)}'
+                    )">Add Questions </button>
+                <button  class="delete-btn" onclick="deleteQuiz(${quiz.id})">
+                    Delete
+                </button>
+                <button  class="delete-btn" onclick="viewResults(${quiz.id})">View results</button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+document.getElementById("quizForm").addEventListener("submit", async function(event) {
+        let csrftoken =document.querySelector('[name=csrfmiddlewaretoken]').value
+        event.preventDefault();
+        const title =document.getElementById("quizTitle").value.trim();
+        const description = document.getElementById("quizDescription").value.trim();
+        const duration=document.getElementById("duration").value
+        if (!title || !description || !duration ) {
+            alert("Please fill all fields");
+            return;
+        }
+        try {
+            const response = await fetch(
+                `/teacher/${userid}/`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrftoken
+
+                    },
+
+                    body: JSON.stringify({
+                        title: title,
+                        description: description,
+                        duration:duration
+                        
+                    })
+                }
+            );
+            const data =await response.json();
+            if (response.ok) {
+                alert("Quiz created successfully!");
+                document.getElementById("quizForm").reset();
+                hideCreateQuiz();
+                loadQuizzes();
+                setTimeout(function() {
+                    selectQuiz(
+                        data.id,
+                        data.title,
+                        data.description,
+                        data.duration
+                    );
+                }, 500);
+            }
+            else {
+                alert(
+                    data.error ||
+                    "Unable to create quiz"
+                );
+            }
+        }
+        catch (error) {
+            console.log(error);
+            alert("Unable to connect to server");
+        }
+    });
+function showCreateQuiz() {
+    const section = document.getElementById("createQuiz");
+    section.classList.remove("hidden");
+    section.scrollIntoView({behavior: "smooth"});
+}
+
+function hideCreateQuiz() {
+    document.getElementById("createQuiz").classList.add("hidden");
+}
+
+function selectQuiz(id, title, description, duration) {
+    selectedQuizId = id;
+    document.getElementById("selectedQuizTitle").textContent = title;
+    document.getElementById("selectedQuizDescription").textContent = description;
+    document.getElementById("selectedDuration").textContent = duration;
+    document.getElementById("selectedQuizSection").classList.remove("hidden");
+    document.getElementById("questionsSection").classList.remove("hidden");
+    loadQuestions(id);
+    document.getElementById("selectedQuizSection").scrollIntoView({
+            behavior: "smooth"
+        });
+}
+
+function showQuestionForm() {
+    if (!selectedQuizId) {
+        alert("Please select a quiz first");
+        return;
+    }
+    document.getElementById("questionFormSection").classList.remove("hidden");
+    document.getElementById("questionFormSection").scrollIntoView({
+            behavior: "smooth"
+        });
+}
+
+function hideQuestionForm() {
+    document.getElementById("questionFormSection").classList.add("hidden");
+}
+
+document.getElementById("questionForm").addEventListener("submit", async function(event) {
+        event.preventDefault();
+        if (!selectedQuizId) {
+            alert("Please select a quiz");
+            return;
+        }
+        const questionText =document.getElementById("questionText").value.trim();
+        const optionA =document.getElementById("optionA").value.trim();
+        const optionB =document.getElementById("optionB").value.trim();
+        const optionC = document.getElementById("optionC").value.trim();
+        const optionD =document.getElementById("optionD").value.trim();
+        const correctAnswer =document.getElementById("correctAnswer").value;
+        let csrftoken =document.querySelector('[name=csrfmiddlewaretoken]').value
+        try {
+            const response = await fetch(
+                `/teacher/${userid}/quiz/${selectedQuizId}/questions/`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrftoken
+                    },
+                    body: JSON.stringify({
+                        question_text: questionText,
+                        option_a: optionA,
+                        option_b: optionB,
+                        option_c: optionC,
+                        option_d: optionD,
+                        correct_answer: correctAnswer
+                    })
+                }
+            );
+            const data =await response.json();
+            if (response.ok) {
+                alert("Question added successfully!");
+                document.getElementById("questionForm").reset();
+                hideQuestionForm();
+                loadQuestions(selectedQuizId);
+            }
+            else {
+                alert(
+                    data.error ||
+                    "Unable to add question"
+                );
+            }
+        }
+        catch (error) {
+            console.log(error);
+            alert("Unable to connect to server");
+        }
+    });
+async function loadQuestions(quizId) {
+    try {
+        const response = await fetch(
+            `/teacher/${userid}/quiz/${quizId}/questions/`
+        );
+        if (!response.ok) {
+            throw new Error(
+                "Unable to load questions"
+            );
+        }
+        const questions =await response.json();
+        displayQuestions(questions);
+        document.getElementById("questionCount").textContent = questions.length;
+    }
+    catch (error) {
+        console.log(error);
+        document.getElementById("questionsContainer").innerHTML =
+            "<p class='loading'>Unable to load questions.</p>";
+    }
+}
+function displayQuestions(questions) {
+    const container =document.getElementById("questionsContainer");
+    container.innerHTML = "";
+    if (questions.length === 0) {
+        container.innerHTML ="<p class='loading'>No questions added yet.</p>";
+        return;
+    }
+    questions.forEach(function(question, index) {
+        const card = document.createElement("div");
+        card.className ="question-card";
+        card.innerHTML = `
+            <p class="question-number">
+                QUESTION ${index + 1}
+            </p>
+            <p class="question-text">
+                ${question.question_text}
+            </p>
+            <div class="option-list">
+                <div class="option
+                    ${question.correct_answer === "A"
+                        ? "correct"
+                        : ""}">
+                    A. ${question.option_a}
+                </div>
+                <div class="option
+                    ${question.correct_answer === "B"
+                        ? "correct"
+                        : ""}">
+                    B. ${question.option_b}
+                </div>
+                <div class="option
+                    ${question.correct_answer === "C"
+                        ? "correct"
+                        : ""}">
+                    C. ${question.option_c}
+                </div>
+                <div class="option
+                    ${question.correct_answer === "D"
+                        ? "correct"
+                        : ""}">
+                    D. ${question.option_d}
+                </div>
+            </div>
+            <div class="question-actions">
+                <button
+                    class="delete-btn"
+                    onclick="deleteQuestion(${question.id})"
+                >
+                    Delete
+                </button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+async function deleteQuiz(quizId) {
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this quiz?"
+        );
+    if (!confirmDelete) {
+        return;
+    }
+    try {
+        const response = await fetch(
+            `/quizdetail/${quizId}/`,
+            {
+                method: "DELETE"
+            }
+
+        );
+
+
+        if (response.ok) {
+            alert("Quiz deleted successfully");
+            loadQuizzes();
+            document.getElementById("selectedQuizSection").classList.add("hidden");
+            document.getElementById("questionsSection").classList.add("hidden");
+        }
+
+        else {
+            alert("Unable to delete quiz");
+        }
+    }
+    catch (error) {
+        console.log(error);
+        alert("Unable to connect to server");
+    }
+}
+async function deleteQuestion(questionId) {
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this question?"
+        )
+    if (!confirmDelete) {
+        return;
+    }
+    try {
+        const response = await fetch(
+            `/teacher/${userid}/quiz/${selectedQuizId}/questions/${questionId}/`,
+            {
+                method: "DELETE"
+            }
+        );
+        if (response.ok) {
+            alert("Question deleted successfully");
+            loadQuestions(selectedQuizId);
+        }
+        else {
+            alert("Unable to delete question");
+        }
+    }
+    catch (error) {
+        console.log(error);
+        alert("Unable to connect to server");
+    }
+
+}
+
+// function editQuiz(quizId) {
+
+//     alert(
+//         "Edit Quiz feature can be added next."
+//     );
+
+// }
+// function editQuestion(questionId) {
+//     alert(
+//         "Edit Question feature can be added next."
+//     );
+
+// }
+function toggleMenu() {
+    const navLinks =document.getElementById("navLinks");
+    navLinks.classList.toggle("active");
+}
+function logout() {
+    localStorage.clear();
+}
+function escapeText(text) {
+
+    if (!text) {
+        return "";
+    }
+
+    return text
+        .replace(/'/g, "\\'")
+        .replace(/"/g, "&quot;");
+
+}
+    </script>
+
+</body>
+</html>

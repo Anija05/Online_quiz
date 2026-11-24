@@ -1,0 +1,300 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Take Aptitude</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: goldenrod;
+            color: #222;
+        }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+        .quiz-header {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .quiz-header h1 {
+            margin-top: 0;
+        }
+
+        .quiz-header p {
+            color: #666;
+        }
+
+        .question-card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .question-number {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #f1f1f1;
+        }
+
+        .option input {
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            width: 50%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #243B2A;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+        }
+        .timer{
+            background-color: rgb(218, 222, 225);
+            height: 50px;
+            margin: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'quiz.css' %}">
+</head>
+
+<body>
+
+<div class="container">
+    <div id="timer" class="timer">Time Left: 20:00</div>
+    <div class="quiz-header">
+        <h1 id="quizTitle">Loading Quiz</h1>
+        <p id="quizDescription"></p>
+    </div>
+
+    <div id="questionsContainer">
+        <p class="loading">Loading questions</p>
+    </div>
+       {% csrf_token %}
+    <button class="submit-btn" onclick="submitQuiz()">
+        Submit Quiz
+    </button>
+
+</div>
+
+
+<script>
+
+    const userid = localStorage.getItem("userid");
+    const quizid = "{{ quizid }}";
+    console.log("USER ID:", userid);
+    console.log("QUIZ ID:", quizid);
+    async function loadQuiz() {
+        if (!userid) {
+            alert("Please login first.");
+            window.location.href = "/login_page/";
+            return;
+        }
+        if (!quizid) {
+            alert("Quiz ID not found.");
+            return;
+        }
+        try {
+            const response = await fetch(`/student/${userid}/quiz/${quizid}/`);
+            const data = await response.json();
+            if (!response.ok) {
+                alert(data.error || "Unable to load quiz.");
+                return;
+            }
+            document.getElementById("quizTitle").textContent =data.quiz.title;
+            document.getElementById("quizDescription").textContent =data.quiz.description;
+            const duration = data.quiz.duration;
+startTimer(duration);
+            displayQuestions(data.question);
+        } catch (error) {
+
+            console.error("ERROR:", error);
+            document.getElementById("questionsContainer").innerHTML =
+                "<p class='loading'>Unable to load quiz.</p>";
+        }
+    }
+function startTimer(duration) {
+
+    let timeLeft = duration * 60;
+
+    const timer = document.getElementById("timer");
+
+    const interval = setInterval(function() {
+
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timer.textContent =
+            "Time Left: " +
+            minutes + ":" +
+            String(seconds).padStart(2, "0");
+        if (timeLeft <= 0) {
+            clearInterval(interval);
+            alert("Time is over. Your quiz will be submitted automatically.");
+            submitQuiz();
+        }
+        timeLeft--;
+
+    }, 1000);
+}
+    function displayQuestions(questions) {
+        const container =document.getElementById("questionsContainer");
+        container.innerHTML = "";
+        if (questions.length === 0) {
+            container.innerHTML =
+                "<p class='loading'>No questions available.</p>";
+            return;
+        }
+        questions.forEach(function(question, index) {
+            const card = document.createElement("div");
+            card.className = "question-card";
+            card.innerHTML = `
+                <p class="question-number">
+                    Question ${index + 1}
+                </p>
+                <p class="question-text">
+                    ${question.question_text}
+                </p>
+                <label class="option">
+                    <input type="radio"
+                           name="question_${question.id}"
+                           value="A">
+                    A. ${question.option_a}
+                </label>
+                <label class="option">
+                    <input type="radio"
+                           name="question_${question.id}"
+                           value="B">
+                    B. ${question.option_b}
+                </label>
+                <label class="option">
+                    <input type="radio"
+                           name="question_${question.id}"
+                           value="C">
+                    C. ${question.option_c}
+                </label>
+                <label class="option">
+                    <input type="radio"
+                           name="question_${question.id}"
+                           value="D">
+                    D. ${question.option_d}
+                </label>
+            `;
+            container.appendChild(card);
+        });
+    }
+    async function submitQuiz() {
+    const answers = {};
+    const questions = document.querySelectorAll(".question-card");
+    let csrftoken =document.querySelector('[name=csrfmiddlewaretoken]').value
+    
+    questions.forEach(function(card) {
+        const selected = card.querySelector(
+            'input[type="radio"]:checked'
+        );
+
+        if (selected) {
+            const questionId = selected.name.replace("question_", "");
+            answers[questionId] = selected.value;
+        }
+
+    });
+
+    try {
+
+        const response = await fetch(
+            `/student/${userid}/quiz/${quizid}/submit/`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrftoken
+
+                },
+                body: JSON.stringify({
+                    answers: answers
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        console.log("RESULT:", data);
+
+        if (response.ok) {
+
+            alert('Submitted successfully!')
+            window.location.href = "/student_page/"
+        } else {
+
+            alert(data.error || "Unable to submit quiz");
+
+        }
+
+    } catch (error) {
+
+        console.error("SUBMIT ERROR:", error);
+
+    }
+}
+
+
+    loadQuiz();
+    history.pushState(null, null, location.href);
+window.onpopstate = function () {
+    history.pushState(null, null, location.href);
+    submitQuiz()
+};
+</script>
+
+</body>
+</html>
